@@ -1,70 +1,52 @@
-# rpdb - remote debugger based on pdb
+# pdbme - remote active debugger based on rpdb
 
-rpdb is a wrapper around pdb that re-routes stdin and stdout to a socket
+This is active fork of https://github.com/tamentis/rpdb. 
+
+Rpdb is a wrapper around pdb that re-routes stdin and stdout to a socket
 handler. 
 
-It has two modes: passive and active:
+Pdbme is Rpdb, which is active. Which means, that while Rpdb open port and waits until you connect to this port, Pdbme connects to your port. 
 
-## Passive mode
+So, in other words, you open pdbme-cli tool, ask your app "pdb me please" and your app will pdb you :). 
 
-By default it opens the debugger on port 4444::
+## Why active?
 
-    import rpdb; rpdb.set_trace()
+Rpdb opens debugger pon port (default 4444), but it has many drawbacks. Eg - it cannot be used in mutlithreaded or multiprocessing application. Even in non-parallel app, port can be occupied a little while after closing it and app will break trying to open it again. 
 
-But you can change that by simply instantiating Rpdb manually::
-
-    import rpdb
-    debugger = rpdb.Rpdb(port=12345)
-    debugger.set_trace()
-
-It is known to work on Jython 2.5 to 2.7, Python 2.5 to 3.1. It was written
-originally for Jython since this is pretty much the only way to debug it when
-running it on Tomcat.
-
-Upon reaching `set_trace()`, your script will "hang" and the only way to get it
-to continue is to access rpdb using telnet, netcat, etc..::
-
-    nc 127.0.0.1 4444
-
-## Active mode
-
-You can add `active=True` flag to `set_trace`, and then *rpdb* will connect to
-your terminal. It's useful when you want to debug app which can break
+Calling your terminal sounds way better way. It's useful when you want to debug app which can break
 simultaneously more than once in a time, and passive mode will refuse to open
 port 4444 again.
 
 Solution to the problem is:
 
     # default host is 127.0.0.1 and default port is 4444
-    import rpdb; rpdb.set_trace(active=True)
+    import pdbme; pdbme.set_trace()
 
 or, in more complex case, eg. when it's running in other host, in your docker, or sth like that
 
-    import rpdb
-    rpdb.set_trace(addr='192.168.1.120', port=12345)
+    import pdbme
+    pgbme.set_trace(addr='192.168.1.120', port=12345)
 
-You should have arpdb-cli running on other side of your communication. 
+You should have pdbme-cli running on other side of your communication. 
 
-### arpdb-cli
+### pdbme-cli
 
-arpdb-cli is a simple tool, using tmux, tcpwrapper and socat to accept incoming
+pdbme-cli is a simple tool, using tmux, tcpwrapper and socat to accept incoming
 connections and spawn tmux session for each incoming breakpoint. 
+
+ * tcpwrapper comes from https://cr.yp.to/ucspi-tcp.html (available in many distros and in MacOS brew)
+ * socat - http://www.dest-unreach.org/socat/
 
 
 Installation in CPython (standard Python)
 -----------------------------------------
 
-    pip install rpdb
+    pip install pdbme
 
-For a quick, ad hoc alternative, you can copy the entire rpdb subdirectory
-(the directory directly containing the __init__.py file) to somewhere on your
-$PYTHONPATH.
+or
+    
+    pip install https://github.com/mahomahomaho/pdbme
 
-Installation in a Tomcat webapp
--------------------------------
-
-Just copy the rpdb directory (the one with the __init__.py file) in your
-WEB-INF/lib/Lib folder along with the standard Jython library (required).
 
 Trigger rpdb with signal
 ------------------------
@@ -73,27 +55,24 @@ Trigger rpdb with signal
 This allows you to debug a running process independantly of a specific failure
 or breakpoint::
 
-    import rpdb
-    rpdb.handle_trap()
+    import pdbme
+    pdbme.handle_trap()
 
     # As with set_trace, you can optionally specify addr and port
-    rpdb.handle_trap("0.0.0.0", 54321)
+    rpdb.handle_trap(host="0.0.0.0", port=4441)
 
 Calling `handle_trap` will overwrite the existing handler for SIGTRAP if one has
 already been defined in your application.
 
-Known bugs
-----------
-  - The socket is not always closed properly so you will need to ^C in netcat
-    and Esc+q in telnet to exit after a continue or quit.
-  - There is a bug in Jython 2.5/pdb that causes rpdb to stop on ghost
-    breakpoints after you continue ('c'), this is fixed in 2.7b1.
-
 Author(s)
 ---------
-Bertrand Janin <b@janin.com> - http://tamentis.com/
 
-With contributions from (chronological, latest first):
+Łukasz Mach <maho@pagema.net> - http://pagema.net/
+
+based on work of rpdb author:
+Bertrand Janin <b@janin.com> - http://tamentis.com/ 
+
+and rpdbs contributors: (chronological, latest first):
 
  - Cameron Davidson-Pilon - @CamDavidsonPilon
  - Pavel Fux - @fuxpavel
@@ -104,8 +83,3 @@ With contributions from (chronological, latest first):
  - k4ml <kamal.mustafa@gmail.com>
  - Sean M. Collins <sean@coreitpro.com>
  - Sean Myers <sean.myers@redhat.com>
-
-This is inspired by:
-
- - http://bugs.python.org/issue721464
- - http://snippets.dzone.com/posts/show/7248
