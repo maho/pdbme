@@ -41,11 +41,11 @@ connections and spawn tmux session for each incoming breakpoint.
 Installation in CPython (standard Python)
 -----------------------------------------
 
-    pip install pdbme
+    ~~pip install pdbme~~ (not yet on PyPi)
 
 or
     
-    pip install https://github.com/mahomahomaho/pdbme
+    pip install git+https://github.com/mahomahomaho/pdbme
 
 
 Trigger rpdb with signal
