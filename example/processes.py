@@ -6,8 +6,8 @@ SLEEPTIME = 0.5
 
 
 def fib(num):
-    import rpdb
-    rpdb.set_trace(active=True)
+    import pdbme
+    pdbme.set_trace()
     assert num >= 0
     if num == 0:
         return 0

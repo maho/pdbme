@@ -25,7 +25,7 @@ Solution to the problem is:
 or, in more complex case, eg. when it's running in other host, in your docker, or sth like that
 
     import pdbme
-    pgbme.set_trace(addr='192.168.1.120', port=12345)
+    pdbme.set_trace(host='192.168.1.120', port=12345)
 
 You should have pdbme-cli running on other side of your communication. 
 
