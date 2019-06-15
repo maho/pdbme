@@ -41,7 +41,7 @@ connections and spawn tmux session for each incoming breakpoint.
 Installation in CPython (standard Python)
 -----------------------------------------
 
-    ~~pip install pdbme~~ (not yet on PyPi)
+ ~~pip install pdbme~~ (not yet on PyPi)
 
 or
     
