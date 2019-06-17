@@ -1,8 +1,9 @@
 import concurrent.futures as cf
-import click
 import time
 
-SLEEPTIME = 0.5
+import click
+
+SLEEPTIME = 0.1
 
 
 def fib(num):
@@ -24,7 +25,8 @@ def fib(num):
 
 @click.command()
 @click.option("--number", "-n", type=int, required=True)
-@click.option("--sleeptime", "-t", type=int, help="how long wait on function time", default=SLEEPTIME)
+@click.option("--sleeptime", "-t", type=int, help="how long wait on function time",
+              default=SLEEPTIME)
 def main(number, sleeptime):
     global SLEEPTIME
     SLEEPTIME = sleeptime
@@ -33,4 +35,4 @@ def main(number, sleeptime):
 
 
 if __name__ == '__main__':
-    main()
+    main()  # pylint: disable=all

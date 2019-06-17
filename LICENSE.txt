@@ -1,4 +1,5 @@
-Copyright (c) 2010,2012 Bertrand Janin <tamentis@neopulsar.org>
+Copyright (c) 2019 Łukasz Mach (Maho) <maho@pagema.net>
+          (c) 2010,2012 Bertrand Janin <tamentis@neopulsar.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
