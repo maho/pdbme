@@ -1,3 +1,8 @@
+0.0.1 (2019-06-14)
+==================
+ - New functionality, new package name, new versioning....
+ - dropped some rpdb functionality, 
+
 0.1.6 (2015-01-05)
 ==================
 
