@@ -11,7 +11,7 @@ class ARpdb(Rpdb):
 
     TODO: continue run when unable to connect to mentioned host/port"""
 
-    def __init__(self, addr, port):
+    def __init__(self, addr, port, start_filename=None, start_lineno=None):
         # backup
         self.old_stdout, self.old_stdin = sys.stdout, sys.stdin
         self.addr, self.port = addr, port
@@ -28,5 +28,6 @@ class ARpdb(Rpdb):
 
         pdb.Pdb.__init__(self, completekey='tab',
                          stdin=FileObjectWrapper(self.handle, self.old_stdin),
-                         stdout=FileObjectWrapper(self.handle, self.old_stdin))
+                         stdout=FileObjectWrapper(self.handle, self.old_stdin),
+                         start_filename=start_filename, start_lineno=None)
         sys.stdout = sys.stdin = self.handle

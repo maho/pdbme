@@ -22,7 +22,7 @@ setup(
     long_description_content_type='text/markdown',
     author="Łukasz Mach",
     author_email="maho@pagema.net",
-    url="http://github.com/mahomahomaho/pdbme",
+    url="http://github.com/maho/pdbme",
     packages=["pdbme", "pdbme.arpdb"],
     classifiers=[
         "Environment :: Console",
